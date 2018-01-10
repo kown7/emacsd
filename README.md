@@ -5,7 +5,8 @@ title: Emacs and VHDL
 # Motivation
 
 While the default VHDL Emacs mode is quite nice, there is room
-for improvement. Here my steps are being documented.
+for improvement. This repository should provide an entry point 
+with a working example.
 
 # Installation
 
