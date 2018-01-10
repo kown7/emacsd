@@ -12,12 +12,18 @@ for improvement. Here my steps are being documented.
 The packages for *ctags* and *gtags* are rather outdated on Ubuntu,
 hence they need to be installed manually.
 
+## Preparation
+
+```shell
+apt install dh-autoreconf pkg-config texinfo
+```
+
 ## ctags
 
 ```shell
 git clone https://github.com/universal-ctags/ctags.git
 cd ctags
-autogen.sh
+./autogen.sh
 ./configure
 make
 sudo make install
