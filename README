@@ -20,3 +20,7 @@ MELPA packages need to be installed seperately
 
 This might help: http://endlessparentheses.com/new-in-package-el-in-emacs-25-1-user-selected-packages.html 
 
+## Pymacs
+
+Pymacs needs to be installed seperately as well.
+

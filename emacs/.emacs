@@ -6,6 +6,7 @@
 (package-initialize)
 
 (setq load-path (cons "~/.emacs.d/vhdl-mode-3.35.1/" load-path))
+(setq load-path (cons "~/.emacs.d/Pymacs/" load-path))
 
 ;;--------------------------------------------------------------------------------
 ;;   Customize keybindings
@@ -108,7 +109,7 @@
  '(mouse-scroll-delay 0)
  '(package-selected-packages
    (quote
-    (tidy tile json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
+    (srefactor tidy tile json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
  '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
@@ -250,6 +251,13 @@
 ;;    C/C++-Mode
 ;;--------------------------------------------------------------------------------
 (add-hook 'c-mode-hook 'auto-complete-mode)
+
+;;--------------------------------------------------------------------------------
+;;    Python Mode
+;;--------------------------------------------------------------------------------
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+(add-hook 'python-mode-hook 'auto-complete-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
