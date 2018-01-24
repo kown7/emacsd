@@ -1,0 +1,22 @@
+# Introduction
+
+This Emacs configuration is supposed to work more-or-less out-of-the-box and
+have a few nice features that are not given in the default VHDL-mode.
+
+# Installation
+
+# .emacs
+
+```shell
+pushd
+cd $HOME
+ln -s .emacs.d/.emacs
+popd
+```
+
+## MELPA
+
+MELPA packages need to be installed seperately
+
+This might help: http://endlessparentheses.com/new-in-package-el-in-emacs-25-1-user-selected-packages.html 
+
