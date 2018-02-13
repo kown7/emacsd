@@ -15,6 +15,15 @@ function update-x11-forwarding
   if [ "right" = "$TDN" ]; then 
     export DISPLAY=`cat ~/.displayRight.txt`
   fi
+  if [ "hades" = "$TDN" ]; then
+    export DISPLAY=`cat ~/.displayHades.txt`
+  fi
+  if [ "guld" = "$TDN" ]; then
+    export DISPLAY=`cat ~/.displayGuld.txt`
+  fi
+  #if [ `hostname` = "kaliber.scs.ch" ]; then
+  #  export DISPLAY=`cat ~/.displayKal.txt`
+  #fi
 }
 
 
@@ -23,6 +32,11 @@ function update-x11-forwarding
 #################################################################
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
+fi
+
+# Source SCS Environment
+if [ -f /etc/scs-scripts/scs_settings.sh ]; then
+    source /etc/scs-scripts/scs_settings.sh
 fi
 
 # Source aliases
@@ -44,10 +58,19 @@ preexec() {
   # Beware!  This fails if PROMPT_COMMAND is a string containing more than one command.
   [ "$BASH_COMMAND" = "$PROMPT_COMMAND" ] && return
 
+  if [ "bitburger.scs.ch" = `hostname` ] ; then
+    update-x11-forwarding
+  fi
+  if [ "kaliber.scs.ch" = `hostname` ] ; then
+    update-x11-forwarding
+  fi
+
   # Debugging.
   #echo DISPLAY = $DISPLAY, display.txt = `cat ~/.display.txt`, STY = $STY, TMUX = $TMUX
 }
 
 update-x11-forwarding
 preexec_install
+
+export LM_LICENSE_FILE=1706@flexlm.scs-ad.scs.ch:2100@flexlm.scs-ad.scs.ch:1709@bitburger.scs.ch:1707@flexlm.scs-ad.scs.ch:17
 

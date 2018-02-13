@@ -35,7 +35,9 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lh='ls -lh'
 
+export HADES6='fe80::21b:21ff:febd:80cb%eth0'
 export EDITOR=vim
 
 alias goto_rmtoo='cd ~/workspace/rmtoo/'
+alias goto_tfml='cd ~/workspace/testframework_ml605/fw/'
 
