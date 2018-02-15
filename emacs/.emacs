@@ -92,9 +92,6 @@
 ;; no toolbar
 (tool-bar-mode -1)
 
-(require 'window-numbering)
-(window-numbering-mode)
-
 ;; misc settings
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -137,6 +134,9 @@
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
 ;;--------------------------------------------------------------------------------
+(require 'window-numbering)
+(window-numbering-mode)
+
 (setq make-backup-files nil)
 (setq auto-save-default t)
 (server-start)
