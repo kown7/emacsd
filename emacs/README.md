@@ -126,6 +126,22 @@ desires to be.
 http://csantosb.github.io/vhdl-tools/
 
 
+# Python
+
+Because there's lots of snaky stuff out there.
+
+## Installation
+
+```shell
+pip install ropemacs
+cd ~/.dotfiles/emacs/Pymacs
+make
+make install
+cd ~/.dotfiles/emacs/ropemacs
+python setup.py install
+```
+
+
 
 [^1]: https://stackoverflow.com/a/15169556
 [^2]: https://www.emacswiki.org/emacs/GnuGlobal#toc4

@@ -6,6 +6,7 @@
 (package-initialize)
 
 (setq load-path (cons "~/.emacs.d/vhdl-mode-3.35.1/" load-path))
+(setq load-path (cons "~/.emacs.d/Pymacs/" load-path))
 
 ;;--------------------------------------------------------------------------------
 ;;   Customize keybindings
@@ -89,9 +90,6 @@
 ;; no toolbar
 (tool-bar-mode -1)
 
-(require 'window-numbering)
-(window-numbering-mode)
-
 ;; misc settings
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -134,6 +132,9 @@
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
 ;;--------------------------------------------------------------------------------
+(require 'window-numbering)
+(window-numbering-mode)
+
 (setq make-backup-files nil)
 (setq auto-save-default t)
 (server-start)
@@ -248,6 +249,12 @@
 ;;    C/C++-Mode
 ;;--------------------------------------------------------------------------------
 (add-hook 'c-mode-hook 'auto-complete-mode)
+
+;;--------------------------------------------------------------------------------
+;;    Python Mode
+;;--------------------------------------------------------------------------------
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations

@@ -1,0 +1,6 @@
+[submodule "emacs/Pymacs"]
+	path = emacs/Pymacs
+	url = https://github.com/pinard/Pymacs.git
+[submodule "emacs/ropemacs"]
+	path = emacs/ropemacs
+	url = https://github.com/python-rope/ropemacs.git
