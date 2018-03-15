@@ -69,8 +69,8 @@ preexec() {
   #echo DISPLAY = $DISPLAY, display.txt = `cat ~/.display.txt`, STY = $STY, TMUX = $TMUX
 }
 
-update-x11-forwarding
-preexec_install
+#update-x11-forwarding
+#preexec_install
 
 export LM_LICENSE_FILE=1706@flexlm.scs-ad.scs.ch:2100@flexlm.scs-ad.scs.ch:1709@bitburger.scs.ch:1707@flexlm.scs-ad.scs.ch:17
 

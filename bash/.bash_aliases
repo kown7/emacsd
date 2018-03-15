@@ -40,4 +40,4 @@ export EDITOR=vim
 
 alias goto_rmtoo='cd ~/workspace/rmtoo/'
 alias goto_tfml='cd ~/workspace/testframework_ml605/fw/'
-
+alias goto_stetst='cd ~/workspace/fw_stellteil_basis/fw_hwt'
