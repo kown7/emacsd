@@ -8,6 +8,8 @@
 (setq load-path (cons "~/.emacs.d/vhdl-mode-3.35.1/" load-path))
 (setq load-path (cons "~/.emacs.d/Pymacs/" load-path))
 
+(load "~/.emacs.d/req-mode.el")
+
 ;;--------------------------------------------------------------------------------
 ;;   Customize keybindings
 ;;--------------------------------------------------------------------------------
@@ -255,6 +257,7 @@
 ;;--------------------------------------------------------------------------------
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
+(add-hook 'python-mode-hook 'auto-complete-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
