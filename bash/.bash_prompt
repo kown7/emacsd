@@ -6,7 +6,11 @@
 
 function __prompt_command() {
 	local EXIT="$?"                         # This needs to be first
-	PS1=""
+	if [[ $PS1 == "(venv)"* ]]; then
+		PS1="(venv) "
+	else
+		PS1="" # Do not reset -> python venv
+	fi
 
 	### Colors to Vars ### {{{
 	## Inspired by http://wiki.archlinux.org/index.php/Color_Bash_Prompt#List_of_colors_for_prompt_and_Bash
