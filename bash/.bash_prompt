@@ -27,7 +27,7 @@ function __prompt_command() {
 	### End Color Vars ### }}}
 
 	if [ $UID -eq "0" ];then
-		PS1+="${Red}\h \W ->${RCol} "       ## Set prompt for root
+		PS1+="${Red}\h \w ->${RCol} "       ## Set prompt for root
 	  else
 		local PSCol=""                      ## Declare so null var fine
 		local PSOpt=""                      ## Above, and fixes repeat issue
@@ -47,7 +47,7 @@ function __prompt_command() {
 		fi
 		### End Machine Test ### }}}
 
-		PS1+="${PSCol}${PSOpt}\W${RCol}"    ## Current working dir
+		PS1+="${PSCol}${PSOpt}\w${RCol}"    ## Current working dir
 
 		### Check Jobs ### {{{
 		#command jobs 2>/dev/null
