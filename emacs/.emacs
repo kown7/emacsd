@@ -331,6 +331,7 @@
 ;; Smooth scrolling
 ;; scroll one line at a time (less "jumpy" than defaults)
 
+(set-mouse-color "white")
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed 't) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
@@ -338,6 +339,7 @@
 (set-mouse-color "white")
 
 (desktop-save-mode 1)
+
 (windmove-default-keybindings)
 
 ;;(setq load-path (cons "~/.emacs.d/" load-path))
