@@ -296,6 +296,7 @@
 (setq mouse-wheel-progressive-speed 't) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
+(set-mouse-color "white")
 
 (desktop-save-mode 1)
 (windmove-default-keybindings)
