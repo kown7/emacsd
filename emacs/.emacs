@@ -246,18 +246,20 @@
 
 (helm-mode 1)
 
-
 ;;--------------------------------------------------------------------------------
 ;;    C/C++-Mode
 ;;--------------------------------------------------------------------------------
+(require 'ws-butler)
+(add-hook 'c-mode-hook 'ws-butler-mode)
 (add-hook 'c-mode-hook 'auto-complete-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Python Mode
 ;;--------------------------------------------------------------------------------
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)                 ; optional
 (add-hook 'python-mode-hook 'auto-complete-mode)
+(add-hook 'python-mode-hook 'ws-butler-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
