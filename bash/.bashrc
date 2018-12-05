@@ -25,6 +25,10 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+if [ -f /etc/bash.bashrc ]; then
+	. /etc/bash.bashrc
+fi
+
 # Source aliases
 if [ -f ~/.bash_aliases ]; then
 	. ~/.bash_aliases
@@ -34,6 +38,22 @@ fi
 if [ -f ~/.bash_prompt ]; then
 	. ~/.bash_prompt
 fi
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
 
 #################################################################
 # This is run before every command.
@@ -51,3 +71,8 @@ preexec() {
 update-x11-forwarding
 preexec_install
 
+if [ "$(grep -c Microsoft /proc/version)" != "0" ]; then
+	export DISPLAY=:0
+	export DOCKER_HOST=tcp://0.0.0.0:2375
+	umask 022
+fi;

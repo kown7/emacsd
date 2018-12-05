@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo $(cd emacs/Pymacs && python setup.py install --user)
+pip install ropemode rope ropemacs
+
 cd $HOME
 ln -s .dotfiles/emacs/ .emacs.d
 ln -s .dotfiles/emacs/.emacs .emacs
