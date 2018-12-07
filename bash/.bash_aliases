@@ -6,11 +6,11 @@ alias gca='git commit --amend --no-edit'
 alias gfa='git fetch --all'
 alias gk='gitk --all  &'
 
-alias c..="cd .."
-alias c...="cd ../.."
-alias c....="cd ../../.."
-alias c.....="cd ../../../.."
-alias c......="cd ../../../../.."
+alias c.="cd .."
+alias c..="cd ../.."
+alias c...="cd ../../.."
+alias c....="cd ../../../.."
+alias c.....="cd ../../../../.."
 
 alias tma='tmux attach-session'
 #alias tml='tmux attach -t left'
