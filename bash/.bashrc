@@ -72,7 +72,7 @@ update-x11-forwarding
 preexec_install
 
 if [ "$(grep -c Microsoft /proc/version)" != "0" ]; then
-	export DISPLAY=:0
+	export DISPLAY=:0.0
 	export DOCKER_HOST=tcp://0.0.0.0:2375
 	umask 022
 fi;
