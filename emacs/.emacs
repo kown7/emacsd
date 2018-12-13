@@ -256,6 +256,9 @@
 ;;--------------------------------------------------------------------------------
 ;;    Python Mode
 ;;--------------------------------------------------------------------------------
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)                 ; optional
 (add-hook 'python-mode-hook 'auto-complete-mode)
