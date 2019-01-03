@@ -9,3 +9,7 @@ ln -s .dotfiles/bash/.bash_preexec
 ln -s .dotfiles/bash/.bash_profile
 ln -s .dotfiles/bash/.bash_prompt
 ln -s .dotfiles/bash/.bashrc
+
+ln -s .dotfiles/tmux/.tmux.conf
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
