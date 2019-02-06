@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo $(cd emacs/Pymacs && python setup.py install --user)
-pip install ropemode rope ropemacs
+set -e
+# set python3 in Makefile for Pymacs
+grep "PYTHON = python3" emacs/Pymacs/Makefile
+set +e
+echo $(cd emacs/Pymacs && make && python3 setup.py install --user)
+pip3 install ropemode rope ropemacs
 
 cd $HOME
 ln -s .dotfiles/emacs/ .emacs.d

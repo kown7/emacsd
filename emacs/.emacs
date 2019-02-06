@@ -256,6 +256,9 @@
 ;;--------------------------------------------------------------------------------
 ;;    Python Mode
 ;;--------------------------------------------------------------------------------
+(setq py-python-command "python3")
+(setq python-shell-interpreter "python3")
+(setq pymacs-python-command "python3")
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 
