@@ -1,11 +1,6 @@
 #!/bin/bash
 
-set -e
-# set python3 in Makefile for Pymacs
-grep "PYTHON = python3" emacs/Pymacs/Makefile
-set +e
-echo $(cd emacs/Pymacs && make && python3 setup.py install --user)
-pip3 install ropemode rope ropemacs
+pip3 install jedi rope flake8 autopep8 yapf black ipython
 
 cd $HOME
 ln -s .dotfiles/emacs/ .emacs.d

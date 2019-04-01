@@ -1,3 +1,0 @@
-[submodule "emacs/Pymacs"]
-	path = emacs/Pymacs
-	url = https://github.com/pinard/Pymacs.git

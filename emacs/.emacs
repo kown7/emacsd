@@ -106,7 +106,7 @@
  '(mouse-scroll-delay 0)
  '(package-selected-packages
    (quote
-    (groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
+    (zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
  '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
@@ -175,10 +175,26 @@
      (color-theme-initialize)
      (color-theme-solarized-dark)))
 
+(set-face-attribute 'region nil :background "#666")
+
 (require 'nyan-mode)
 (nyan-mode)
 (nyan-toggle-wavy-trail)
 (nyan-start-animation)
+
+(hl-line-mode)
+(set-face-background hl-line-face "gray13")
+
+;; set changed-colour to orange
+(defface diff-hl-change
+  '((default :foreground "orange3")
+    (((class color) (min-colors 88) (background light))
+     :background "#ddddff")
+    (((class color) (min-colors 88) (background dark))
+     :background "orange3"))
+  "Face used to highlight changed lines."
+:group 'diff-hl)
+
 
 ;;--------------------------------------------------------------------------------
 ;;    HELM
@@ -257,15 +273,17 @@
 ;;    Python Mode
 ;;--------------------------------------------------------------------------------
 (setq py-python-command "python3")
-(setq python-shell-interpreter "python3")
-(setq pymacs-python-command "python3")
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+(setq python-shell-interpreter "ipython3")
 
-(setq jedi:complete-on-dot t)                 ; optional
-(add-hook 'python-mode-hook 'jedi:setup)
-(add-hook 'python-mode-hook 'auto-complete-mode)
+(elpy-enable)
+(setq elpy-rpc-backend "jedi")
+(setq elpy-rpc-python-command "python3")
+(setq python-shell-interpreter "ipython3"
+      python-shell-interpreter-args "-i")
+
 (add-hook 'python-mode-hook 'ws-butler-mode)
+(add-hook 'python-mode-hook 'diff-hl-mode)
+(add-hook 'python-mode-hook 'diff-hl-flydiff-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
