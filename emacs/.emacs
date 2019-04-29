@@ -163,6 +163,9 @@
 ;;--------------------------------------------------------------------------------
 (require 'auto-complete)
 (add-hook 'vhdl-mode-hook 'auto-complete-mode)
+(add-hook 'vhdl-mode-hook 'diff-hl-mode)
+(add-hook 'vhdl-mode-hook 'diff-hl-flydiff-mode)
+(add-hook 'vhdl-mode-hook 'hl-line-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Custom and Colours
@@ -286,6 +289,14 @@
 (add-hook 'python-mode-hook 'ws-butler-mode)
 (add-hook 'python-mode-hook 'diff-hl-mode)
 (add-hook 'python-mode-hook 'diff-hl-flydiff-mode)
+(add-hook 'python-mode-hook 'hl-line-mode)
+
+(defun my-python-config ()
+  (local-set-key (kbd "M-.") 'elpy-goto-definition)
+  (local-set-key (kbd "M-:") 'elpy-goto-definition-other-window)
+  (local-set-key (kbd "M-,") 'pop-tag-mark)
+  )
+(add-hook 'python-mode-hook 'my-python-config)
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
