@@ -27,6 +27,8 @@
 (global-set-key '[f2]   'end-kbd-macro)
 (global-set-key '[f3]   'call-last-kbd-macro)
 (global-set-key '[f4]   'goto-line)
+(global-set-key '[f5]   'highlight-symbol-at-point)
+(global-set-key '[S-f5] 'unhighlight-regexp)
 (global-set-key '[f7]   "\C-u\M-xtoggle-truncate-lines")
 (global-set-key '[f8]   'other-window)
 (global-set-key '[f9]   'my-swap-buffer)
