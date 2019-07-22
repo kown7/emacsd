@@ -15,3 +15,4 @@ ln -s .dotfiles/bash/.bashrc
 ln -s .dotfiles/tmux/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+ln -s .dotfiles/gtags.conf .globalrc
