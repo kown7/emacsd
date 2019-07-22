@@ -37,5 +37,5 @@ alias lh='ls -lh'
 
 export EDITOR=vim
 
-alias goto_rmtoo='cd ~/workspace/rmtoo/'
+alias goto_rmtoo='cd ~/workspace/rmtoo/ && tmux rename-window rmtoo'
 
