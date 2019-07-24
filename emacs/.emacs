@@ -5,7 +5,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(setq load-path (cons "~/.emacs.d/vhdl-mode-3.35.1/" load-path))
+(setq load-path (cons "~/.emacs.d/vhdl-mode-3.38.1/" load-path))
 (setq load-path (cons "~/.emacs.d/Pymacs/" load-path))
 
 (load "~/.emacs.d/req-mode.el")
