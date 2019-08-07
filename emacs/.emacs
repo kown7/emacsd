@@ -307,6 +307,9 @@
 (require 'window-numbering)
 (window-numbering-mode)
 
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
+
 (require 'smartscan)
 (global-smartscan-mode 1)
 
