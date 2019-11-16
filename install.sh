@@ -16,3 +16,4 @@ ln -s .dotfiles/tmux/.tmux.conf
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 ln -s .dotfiles/gtags.conf .globalrc
+ln -s $HOME/.dotfiles/bin/backup-borg.sh $HOME/bin/backup-borg.sh
