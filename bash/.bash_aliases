@@ -39,3 +39,5 @@ export EDITOR=vim
 
 alias goto_rmtoo='cd ~/workspace/rmtoo/ && tmux rename-window rmtoo'
 
+alias wanip6='dig @resolver1.opendns.com A myip.opendns.com +short -6'
+alias wanip4='dig @resolver1.opendns.com A myip.opendns.com +short -4'
