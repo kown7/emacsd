@@ -120,7 +120,7 @@
  '(vhdl-special-syntax-alist
    (quote
     (("signal-clr" "\\<\\(Clr\\|clr\\|CLR\\|Clear\\|clear\\|CLEAR\\)[A-Za-z0-9_]*" "Tomato" "orange")
-     ("signal-clock" "\\<\\(Clk\\|CLK\\|clk\\|Clock\\|clock\\|CLOCK\\)\\(\\>\\|_[A-Za-z0-9_]*\\>\\)+" "LimeGreen" "lightseagreen")
+     ("signal-clock" "\\<\\(Clk\\|CLK\\|clk\\|Clock\\|clock\\|CLOCK\\)\\(\\>\\|[_A-Za-z0-9_]*\\>\\)+" "LimeGreen" "lightseagreen")
      ("signal-reset" "\\<\\(Rst\\|RST\\|rst\\|Reset\\|RESET\\|reset\\)[A-Za-z0-9_]*" "Tomato" "red3")
      ("type-definition" "\\<\\w+_[tT]\\>" "aquamarine3" "mediumaquamarine")
      ("record-definition" "\\<\\w+_[rR]\\>" "magenta2" "magenta2")
@@ -295,6 +295,8 @@
   (local-set-key (kbd "M-.") 'elpy-goto-definition)
   (local-set-key (kbd "M-:") 'elpy-goto-definition-other-window)
   (local-set-key (kbd "M-,") 'pop-tag-mark)
+  (local-set-key (kbd "C->") 'python-nav-end-of-block)
+  (local-set-key (kbd "C-<") 'python-nav-beginning-of-block)
   )
 (add-hook 'python-mode-hook 'my-python-config)
 
