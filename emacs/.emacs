@@ -108,7 +108,7 @@
  '(mouse-scroll-delay 0)
  '(package-selected-packages
    (quote
-    (diff-hl groovy-mode srefactor tidy tile json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
+    (fixmee ws-butler diff-hl groovy-mode srefactor tidy tile json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
  '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
@@ -128,7 +128,7 @@
      ("generic" "\\<\\w+_[gG]\\>" "DarkOrange" "darkorange")
      ("instance" "\\<[iI]_\\w+\\>" "Grey50" "gray30")
      ("process-name" "\\<[p]_\\w+\\>" "Grey50" "gray50")
-     ("Enable" "\\<\\w+\\(En\\|EN\\|_[WR]?en\\|Ena\\||WE\\)\\>" "brightblue" "chartreuse2")
+     ("Enable" "\\<\\w+\\(En\\|_EN\\|[WR]en\\|Ena\\||_WE\\)\\>" "brightblue" "chartreuse2")
      ("Valid" "\\<\\w+\\(Vld\\|VLD\\|_vld\\|Vld_[A-z]+\\)\\>" "brightblue" "chartreuse2")
      ("Ready" "\\<\\w+\\(Rdy\\|RDY\\|_rdy\\)\\>" "brightblue" "chartreuse2"))))
  '(vhdl-underscore-is-part-of-word t))
@@ -261,6 +261,11 @@
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 (add-hook 'python-mode-hook 'auto-complete-mode)
+(add-hook 'python-mode-hook 'diff-hl-mode)
+
+; https://emacs.stackexchange.com/a/15244
+(add-hook 'python-mode-hook
+        (lambda () (setq forward-sexp-function nil)))
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
@@ -277,6 +282,10 @@
 (require 'smartscan)
 (global-smartscan-mode 1)
 
+(require 'button-lock)
+(require 'fixmee)
+(global-fixmee-mode 1)
+
 (setq make-backup-files nil)
 (setq auto-save-default t)
 (server-start)
@@ -290,10 +299,38 @@
 	(revert-buffer t t t) )))
   (message "Refreshed open files.") )
 
+;; move lines up and down
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key [(control shift up)]  'move-line-up)
+(global-set-key [(control shift down)]  'move-line-down)
+
 
 (global-set-key (kbd "M-<left>") 'enlarge-window)
 (global-set-key (kbd "M-<right>") 'shrink-window)
 
+(defun reverse-letters-region (beg end)
+ "Reverse characters between BEG and END."
+ (interactive "r")
+ (let ((region (buffer-substring beg end)))
+   (delete-region beg end)
+   (insert (nreverse region))))
+
+(require 'ws-butler)
+(add-hook 'prog-mode-hook #'ws-butler-mode)
 
 ;; Smooth scrolling
 ;; scroll one line at a time (less "jumpy" than defaults)
