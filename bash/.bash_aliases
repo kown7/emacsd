@@ -6,11 +6,11 @@ alias gca='git commit --amend --no-edit'
 alias gfa='git fetch --all'
 alias gk='gitk --all  &'
 
-alias c..="cd .."
-alias c...="cd ../.."
-alias c....="cd ../../.."
-alias c.....="cd ../../../.."
-alias c......="cd ../../../../.."
+alias c.="cd .."
+alias c..="cd ../.."
+alias c...="cd ../../.."
+alias c....="cd ../../../.."
+alias c.....="cd ../../../../.."
 
 alias tma='tmux attach-session'
 #alias tml='tmux attach -t left'
@@ -40,6 +40,9 @@ export EDITOR=vim
 
 alias goto_home='cd /var/home/knordstroem'
 alias goto_workspace='cd /var/home/knordstroem/workspace'
-alias goto_rmtoo='cd ~/workspace/rmtoo/'
+alias goto_rmtoo='cd ~/workspace/rmtoo/ && tmux rename-window rmtoo'
 alias goto_tfml='cd ~/workspace/testframework_ml605/fw/'
 alias goto_stetst='cd ~/workspace/fw_stellteil_basis/fw_hwt'
+
+alias wanip6='dig @resolver1.opendns.com A myip.opendns.com +short -6'
+alias wanip4='dig @resolver1.opendns.com A myip.opendns.com +short -4'

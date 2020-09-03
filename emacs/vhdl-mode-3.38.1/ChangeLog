@@ -1,3 +1,56 @@
+2015-03-11  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.37.2 released.
+	(vhdl-beginning-of-statement-1): Fix indentation for "else generate".
+	(vhdl-template-els*): Support generate statement.
+	(vhdl-begin-p): Handle missing space between keyword and parenthesis.
+
+2015-02-10  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.37.2 released.
+	(vhdl-mode): Remove 'comment-padding' setting.
+
+2015-01-15  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.37.1 released.
+	(top): VHDL'08 support (reserved words, context declaration, block
+	comments, directives, 'all' keyword in sensitivity list.
+	(vhdl-mode-syntax-table-init): Support VHDL'08 block comments.
+	(vhdl-in-comment-p): Block comment recognition, indentation.
+	(vhdl-beginning-of-directive): Support directives.
+	(vhdl-08-*): Highlight VHDL'08 standardized keywords, directives.
+	(vhdl-sensitivity-list-all): Use 'all' keyword in sensitivity list (08).
+
+2014-11-27  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.36.1 released.
+	(vhdl-compiler-alist): Anchor all error regexps.
+	(vhdl-compile-use-local-error-regexp): Change default to nil.
+
+2014-11-26  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Anchor some error regexps.
+
+2014-11-18  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-aput, vhdl-adelete, vhdl-aget): Simplify code.
+
+2014-04-02  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-import-project): Also set `vhdl-compiler'.
+
+2014-03-28  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compile-init): Not initialize regexps for Emacs 22+.
+	(vhdl-error-regexp-emacs-alist): Remove regexps from all compilers
+	except `vhdl-compiler'.
+	(vhdl-template-replace-header-keywords): Fix bug for "<title string>".
+	(vhdl-aput, vhdl-adelete, vhdl-aget): Rename functions from assoc.el.
+
 2014-03-11  Reto Zimmermann  <reto@gnu.org>
 
 	* vhdl-mode.el: Version 3.35.1 released.

@@ -1,7 +1,9 @@
 #!/bin/bash
 # This is for login-shells only
-export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:${HOME}/.local/bin:$PATH
 export DO_COLOR=1
+export GTAGSLABEL=ctags
+export GTAGSCONF=${HOME}/.dotfiles/gtags.conf
 
 if [ -f ~/.bashrc ]; then
 	. ~/.bashrc

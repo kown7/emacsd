@@ -5,7 +5,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(setq load-path (cons "~/.emacs.d/vhdl-mode-3.35.1/" load-path))
+(setq load-path (cons "~/.emacs.d/vhdl-mode-3.38.1/" load-path))
 (setq load-path (cons "~/.emacs.d/Pymacs/" load-path))
 
 (load "~/.emacs.d/req-mode.el")
@@ -29,6 +29,8 @@
 (global-set-key '[f2]   'end-kbd-macro)
 (global-set-key '[f3]   'call-last-kbd-macro)
 (global-set-key '[f4]   'goto-line)
+(global-set-key '[f5]   'highlight-symbol-at-point)
+(global-set-key '[S-f5] 'unhighlight-regexp)
 (global-set-key '[f7]   "\C-u\M-xtoggle-truncate-lines")
 (global-set-key '[f8]   'other-window)
 (global-set-key '[f9]   'my-swap-buffer)
@@ -108,7 +110,7 @@
  '(mouse-scroll-delay 0)
  '(package-selected-packages
    (quote
-    (fixmee ws-butler diff-hl groovy-mode srefactor tidy tile json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
+    (fixmee zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
  '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
@@ -164,6 +166,9 @@
 ;;--------------------------------------------------------------------------------
 (require 'auto-complete)
 (add-hook 'vhdl-mode-hook 'auto-complete-mode)
+(add-hook 'vhdl-mode-hook 'diff-hl-mode)
+(add-hook 'vhdl-mode-hook 'diff-hl-flydiff-mode)
+(add-hook 'vhdl-mode-hook 'hl-line-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Custom and Colours
@@ -178,10 +183,26 @@
      (color-theme-initialize)
      (color-theme-solarized-dark)))
 
+(set-face-attribute 'region nil :background "#666")
+
 (require 'nyan-mode)
 (nyan-mode)
 (nyan-toggle-wavy-trail)
 (nyan-start-animation)
+
+(hl-line-mode)
+(set-face-background hl-line-face "gray13")
+
+;; set changed-colour to orange
+(defface diff-hl-change
+  '((default :foreground "orange3")
+    (((class color) (min-colors 88) (background light))
+     :background "#ddddff")
+    (((class color) (min-colors 88) (background dark))
+     :background "orange3"))
+  "Face used to highlight changed lines."
+:group 'diff-hl)
+
 
 ;;--------------------------------------------------------------------------------
 ;;    HELM
@@ -249,20 +270,39 @@
 
 (helm-mode 1)
 
-
 ;;--------------------------------------------------------------------------------
 ;;    C/C++-Mode
 ;;--------------------------------------------------------------------------------
+(require 'ws-butler)
+(add-hook 'c-mode-hook 'ws-butler-mode)
 (add-hook 'c-mode-hook 'auto-complete-mode)
 
 ;;--------------------------------------------------------------------------------
 ;;    Python Mode
 ;;--------------------------------------------------------------------------------
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
-(add-hook 'python-mode-hook 'auto-complete-mode)
-(add-hook 'python-mode-hook 'diff-hl-mode)
 
+(setq py-python-command "python3")
+(setq python-shell-interpreter "ipython3")
+
+(elpy-enable)
+(setq elpy-rpc-backend "jedi")
+(setq elpy-rpc-python-command "python3")
+(setq python-shell-interpreter "ipython3"
+      python-shell-interpreter-args "-i")
+
+(add-hook 'python-mode-hook 'ws-butler-mode)
+(add-hook 'python-mode-hook 'diff-hl-mode)
+(add-hook 'python-mode-hook 'diff-hl-flydiff-mode)
+(add-hook 'python-mode-hook 'hl-line-mode)
+
+(defun my-python-config ()
+  (local-set-key (kbd "M-.") 'elpy-goto-definition)
+  (local-set-key (kbd "M-:") 'elpy-goto-definition-other-window)
+  (local-set-key (kbd "M-,") 'pop-tag-mark)
+  )
+(add-hook 'python-mode-hook 'my-python-config)
+
+(add-hook 'python-mode-hook 'auto-complete-mode)
 ; https://emacs.stackexchange.com/a/15244
 (add-hook 'python-mode-hook
         (lambda () (setq forward-sexp-function nil)))
@@ -340,6 +380,7 @@
 (setq mouse-wheel-progressive-speed 't) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
+(set-mouse-color "white")
 
 (desktop-save-mode 1)
 
