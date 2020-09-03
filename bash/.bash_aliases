@@ -38,6 +38,8 @@ alias lh='ls -lh'
 export HADES6='fe80::21b:21ff:febd:80cb%eth0'
 export EDITOR=vim
 
+alias goto_home='cd /var/home/knordstroem'
+alias goto_workspace='cd /var/home/knordstroem/workspace'
 alias goto_rmtoo='cd ~/workspace/rmtoo/'
 alias goto_tfml='cd ~/workspace/testframework_ml605/fw/'
 alias goto_stetst='cd ~/workspace/fw_stellteil_basis/fw_hwt'

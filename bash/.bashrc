@@ -72,5 +72,7 @@ preexec() {
 #update-x11-forwarding
 #preexec_install
 
-export LM_LICENSE_FILE=1706@flexlm.scs-ad.scs.ch:2100@flexlm.scs-ad.scs.ch:1709@bitburger.scs.ch:1707@flexlm.scs-ad.scs.ch:17
-
+# Source the SCS scripts (tool licensing)
+if [ -f /etc/scs-scripts/scs_settings.sh ]; then
+    source /etc/scs-scripts/scs_settings.sh
+fi
