@@ -16,6 +16,8 @@ alias tma='tmux attach-session'
 #alias tml='tmux attach -t left'
 #alias tmr='tmux attach -t 1'
 
+alias bel='echo -ne "\a"'
+
 # ble color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"

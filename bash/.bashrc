@@ -101,8 +101,9 @@ if [ -f /etc/scs-scripts/scs_settings.sh ]; then
     source /etc/scs-scripts/scs_settings.sh
 fi
 
-if [ "$(grep -c Microsoft /proc/version)" != "0" ]; then
-	export DISPLAY=:0.0
+if [ "$(grep -c microsoft /proc/version)" != "0" ]; then
+	export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+	export LIBGL_ALWAYS_INDIRECT=1
 	export DOCKER_HOST=tcp://0.0.0.0:2375
 	umask 022
 fi;

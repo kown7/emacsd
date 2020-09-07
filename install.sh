@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip3 install jedi rope flake8 autopep8 yapf black ipython
+pip3 install jedi rope flake8 autopep8 yapf black ipython pyflake
 
 cd $HOME
 ln -s .dotfiles/emacs/ .emacs.d
