@@ -57,6 +57,12 @@ if [ -f ~/.bash_prompt ]; then
 	. ~/.bash_prompt
 fi
 
+# FZF usage
+if [ -f /usr/share/doc/fzf/examples/completion.bash ]; then
+	. /usr/share/doc/fzf/examples/completion.bash
+	. /usr/share/doc/fzf/examples/key-bindings.bash
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -102,8 +108,8 @@ if [ -f /etc/scs-scripts/scs_settings.sh ]; then
 fi
 
 if [ "$(grep -c microsoft /proc/version)" != "0" ]; then
-	export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+	export DISPLAY=$(route -n | awk '/0.0.0.0 / {print $2; exit}'):0
+	# export DISPLAY=$(awk '/nameserver / {print $2; exit}' /run/resolvconf/resolv.conf 2>/dev/null):0
 	export LIBGL_ALWAYS_INDIRECT=1
-	export DOCKER_HOST=tcp://0.0.0.0:2375
 	umask 022
 fi;
