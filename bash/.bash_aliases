@@ -5,6 +5,7 @@ alias gitsa='git status'
 alias gca='git commit --amend --no-edit'
 alias gfa='git fetch --all'
 alias gk='gitk --all  &'
+alias githeadshort='git rev-parse --short HEAD'
 
 alias c.="cd .."
 alias c..="cd ../.."
@@ -17,6 +18,7 @@ alias tma='tmux attach-session'
 #alias tmr='tmux attach -t 1'
 
 alias bel='echo -ne "\a"'
+alias cwdiff="wdiff -n -w $'\033[30;41m' -x $'\033[0m' -y $'\033[30;42m' -z $'\033[0m'"
 
 # ble color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -36,8 +38,10 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias lh='ls -lh'
+alias lst='ls -lrt --color | tail'
 
 export EDITOR=vim
+alias evim='TERM=xterm-256color emacs -nw'
 
 alias goto_rmtoo='cd ~/workspace/rmtoo/ && tmux rename-window rmtoo'
 

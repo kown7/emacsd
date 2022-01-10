@@ -22,6 +22,10 @@
                                          try-expand-all-abbrevs
                                          try-expand-line))
 
+(global-set-key (kbd "C-c t") 'tile-select)
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
 ;; misc stuff
 (global-set-key '[f1]   'start-kbd-macro)
 (global-set-key '[f2]   'end-kbd-macro)
@@ -31,9 +35,9 @@
 (global-set-key '[S-f5] 'unhighlight-regexp)
 (global-set-key '[f7]   "\C-u\M-xtoggle-truncate-lines")
 (global-set-key '[f8]   'other-window)
-(global-set-key '[f9]   'my-swap-buffer)
 (global-set-key "\M-t"  'my-swap-buffer)
-(global-set-key '[f10]  'buffer-menu)
+(global-set-key '[f9]   'helm-projectile-find-file-dwim)
+(global-set-key '[f10]  'helm-buffers-list)
 ;; M-: (read-key-sequence-vector "") RET C-ö
 (global-set-key (quote [67109116]) 'backward-paragraph)
 (global-set-key (quote [67109092]) 'forward-paragraph)
@@ -48,6 +52,8 @@
 (global-set-key '[S-down]   'my-pan-up-1)
 (global-set-key '[S-left]   'my-pan-right-2)
 (global-set-key '[S-right]  'my-pan-left-2)
+
+(global-set-key (kbd "C-x C-M-c") 'save-buffers-kill-emacs)
 
 (defun my-swap-buffer ()
   (interactive)
@@ -102,13 +108,14 @@
  ;; If there is more than one, they won't work right.
  '(auto-save-default nil)
  '(column-number-mode t)
+ '(elpy-shell-use-project-root t)
  '(helm-gtags-auto-update t)
  '(inhibit-startup-screen t)
  '(minimap-mode nil)
  '(mouse-scroll-delay 0)
  '(package-selected-packages
    (quote
-    (yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
+    (ac-php php-mode magit ws-butler xr helm-projectile projectile helm-sly sly helm-lsp yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
  '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
@@ -212,6 +219,7 @@
 (global-set-key (kbd "M-.") 'helm-gtags-dwim)
 ;(global-set-key (kbd "M--") 'helm-gtags-find-symbol)
 (global-set-key (kbd "M-:") 'helm-gtags-find-tag-other-window)
+(global-set-key (kbd "C-M-:") 'helm-git-grep-at-point)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
@@ -221,7 +229,8 @@
 
 (global-set-key "\M-y"      'helm-show-kill-ring)
 (global-set-key "\C-x\C-f"  'helm-find-files)
-(setq helm-M-x-fuzzy-match  t)
+(setq helm-completion-style 'emacs)
+(setq completion-styles     '(helm-flex))
 (global-set-key "\M-x"      'helm-M-x)
 (setq helm-buffers-fuzzy-matching  t)
 (global-set-key "\C-xb"     'helm-buffers-list)
@@ -266,6 +275,7 @@
 (helm-autoresize-mode 1)
 
 (helm-mode 1)
+(global-set-key (kbd "C-c p f") 'helm-projectile-find-files)
 
 ;;--------------------------------------------------------------------------------
 ;;    C/C++-Mode
@@ -279,17 +289,18 @@
 ;;--------------------------------------------------------------------------------
 (setq py-python-command "python3")
 (setq python-shell-interpreter "ipython3")
+(setq python-shell-interpreter-args "--simple-prompt -i")
 
 (elpy-enable)
 (setq elpy-rpc-backend "jedi")
 (setq elpy-rpc-python-command "python3")
-(setq python-shell-interpreter "ipython3"
-      python-shell-interpreter-args "-i")
 
 (add-hook 'python-mode-hook 'ws-butler-mode)
 (add-hook 'python-mode-hook 'diff-hl-mode)
 (add-hook 'python-mode-hook 'diff-hl-flydiff-mode)
 (add-hook 'python-mode-hook 'hl-line-mode)
+
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 (defun my-python-config ()
   (local-set-key (kbd "M-.") 'elpy-goto-definition)
@@ -300,11 +311,22 @@
   )
 (add-hook 'python-mode-hook 'my-python-config)
 
+;; No auto-complete --> there are others
+; (add-hook 'python-mode-hook 'auto-complete-mode)
+; https://emacs.stackexchange.com/a/15244
+(add-hook 'python-mode-hook
+        (lambda () (setq forward-sexp-function nil)))
+
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
 ;;--------------------------------------------------------------------------------
-;; no toolbar
+;; no toolbar/scrollbar
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
+;;    Magit / diff-hl
+(diff-hl-mode)
+(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 (require 'window-numbering)
 (window-numbering-mode)
@@ -340,7 +362,6 @@
 (setq mouse-wheel-progressive-speed 't) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
-(set-mouse-color "white")
 
 (desktop-save-mode 1)
 (windmove-default-keybindings)

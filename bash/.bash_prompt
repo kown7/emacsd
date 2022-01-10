@@ -32,7 +32,7 @@ function __prompt_command() {
 
 	if [ $UID -eq "0" ];then
 		PS1+="${Red}\h \w ->${RCol} "       ## Set prompt for root
-	  else
+	else
 		local PSCol=""                      ## Declare so null var fine
 		local PSOpt=""                      ## Above, and fixes repeat issue
 
