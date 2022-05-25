@@ -10,6 +10,19 @@
 
 (load "~/.emacs.d/req-mode.el")
 
+;; Restart frozen server: https://www.emacswiki.org/emacs/EmacsAsDaemon#h5o-16
+(defun signal-restart-server ()
+  "Handler for SIGUSR1 signal, to (re)start an emacs server.
+or from the command line with:
+$ kill -USR1 <emacs-pid>
+$ emacsclient -c
+"
+  (interactive)
+  "(server-force-delete)
+  (server-start :inhibit-prompt t)"
+  (server-start)
+  )
+(define-key special-event-map [sigusr1] 'signal-restart-server)
 ;;--------------------------------------------------------------------------------
 ;;   Customize keybindings
 ;;--------------------------------------------------------------------------------
@@ -114,8 +127,7 @@
  '(minimap-mode nil)
  '(mouse-scroll-delay 0)
  '(package-selected-packages
-   (quote
-    (ac-php php-mode magit ws-butler xr helm-projectile projectile helm-sly sly helm-lsp yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
+   '(helm-ag git-timemachine ag editorconfig helm-dash transpose-frame elpy flycheck ac-php php-mode magit ws-butler xr helm-projectile projectile helm-sly sly helm-lsp yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
  '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
@@ -134,7 +146,8 @@
      ("constant" "\\<\\w+_[cC]\\>" "DodgerBlue3" "dodgerblue3")
      ("generic" "\\<\\w+_[gG]\\>" "DarkOrange" "darkorange")
      ("instance" "\\<[iI]_\\w+\\>" "Grey50" "gray30")
-     ("Enable" "\\<\\w+\\(En\\|EN\\|_[WR]?en\\|Ena\\||WE\\)\\>" "brightblue" "chartreuse2")
+     ("process-name" "\\<[p]_\\w+\\>" "Grey50" "gray50")
+     ("Enable" "\\<\\w+\\(En\\|_EN\\|[WR]en\\|Ena\\||_WE\\)\\>" "brightblue" "chartreuse2")
      ("Valid" "\\<\\w+\\(Vld\\|VLD\\|_vld\\|Vld_[A-z]+\\)\\>" "brightblue" "chartreuse2")
      ("Ready" "\\<\\w+\\(Rdy\\|RDY\\|_rdy\\)\\>" "brightblue" "chartreuse2"))))
  '(vhdl-underscore-is-part-of-word t))
@@ -188,6 +201,8 @@
      (color-theme-solarized-dark)))
 
 (set-face-attribute 'region nil :background "#666")
+(require 'magit)
+(set-face-attribute 'magit-header-line nil :background "#073642")
 
 (require 'nyan-mode)
 (nyan-mode)
@@ -287,13 +302,18 @@
 ;;--------------------------------------------------------------------------------
 ;;    Python Mode
 ;;--------------------------------------------------------------------------------
+
+;; https://github.com/jorgenschaefer/elpy/issues/1749
+;; (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
+;; (set-language-environment "UTF-8")
+
 (setq py-python-command "python3")
 (setq python-shell-interpreter "ipython3")
 (setq python-shell-interpreter-args "--simple-prompt -i")
 
 (elpy-enable)
-(setq elpy-rpc-backend "jedi")
-(setq elpy-rpc-python-command "python3")
+;; (setq elpy-rpc-backend "jedi")
+;; (setq elpy-rpc-python-command "python3")
 
 (add-hook 'python-mode-hook 'ws-butler-mode)
 (add-hook 'python-mode-hook 'diff-hl-mode)
@@ -328,6 +348,8 @@
 (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
+(require 'tile)
+
 (require 'window-numbering)
 (window-numbering-mode)
 
@@ -336,6 +358,10 @@
 
 (require 'smartscan)
 (global-smartscan-mode 1)
+
+(require 'button-lock)
+(require 'fixmee)
+(global-fixmee-mode 1)
 
 (setq make-backup-files nil)
 (setq auto-save-default t)
@@ -350,20 +376,50 @@
 	(revert-buffer t t t) )))
   (message "Refreshed open files.") )
 
+;; move lines up and down
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key [(control shift up)]  'move-line-up)
+(global-set-key [(control shift down)]  'move-line-down)
+
 
 (global-set-key (kbd "M-<left>") 'enlarge-window)
 (global-set-key (kbd "M-<right>") 'shrink-window)
 
+(defun reverse-letters-region (beg end)
+ "Reverse characters between BEG and END."
+ (interactive "r")
+ (let ((region (buffer-substring beg end)))
+   (delete-region beg end)
+   (insert (nreverse region))))
+
+(require 'ws-butler)
+(add-hook 'prog-mode-hook #'ws-butler-mode)
 
 ;; Smooth scrolling
 ;; scroll one line at a time (less "jumpy" than defaults)
 
+(set-mouse-color "white")
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed 't) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
 (desktop-save-mode 1)
+
 (windmove-default-keybindings)
 
 ;;(setq load-path (cons "~/.emacs.d/" load-path))
