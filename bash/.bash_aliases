@@ -42,6 +42,7 @@ alias lst='ls -lrt --color | tail'
 
 export EDITOR=vim
 alias evim='TERM=xterm-256color emacs -nw'
+alias ec='emacsclient -nc'
 
 alias goto_rmtoo='cd ~/workspace/rmtoo/ && tmux rename-window rmtoo'
 

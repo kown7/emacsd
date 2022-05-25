@@ -8,6 +8,8 @@ function __prompt_command() {
 	local EXIT="$?"                         # This needs to be first
 	if [[ $PS1 == "(venv)"* ]]; then
 		PS1="(venv) "
+	elif [[ $PS1 == *"nix-shell"* ]]; then
+		PS1="\n\[\033[1;32m\][nix-shell:\w]\$\[\033[0m\]"
 	else
 		PS1="" # Do not reset -> python venv
 	fi
@@ -150,5 +152,7 @@ function __prompt_command() {
 
 		PS1+=" ${PSCol}-> ${RCol}"          ## End of PS1
 	fi
+	# https://www.digitalocean.com/community/tutorials/how-to-use-bash-history-commands-and-expansions-on-a-linux-vps
+	history -a; history -c; history -r
 }
 ### End PS1 ### }}}

@@ -13,3 +13,4 @@ fi
 export PROMPT_COMMAND=__prompt_command      # Func to gen PS1 after CMDs
 
 
+if [ -e /home/knordstroem/.nix-profile/etc/profile.d/nix.sh ]; then . /home/knordstroem/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
