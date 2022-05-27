@@ -1,14 +1,65 @@
 ;;--------------------------------------------------------------------------------
 ;;   Modify exec/load-path
 ;;--------------------------------------------------------------------------------
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(package-initialize)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(setq package-enable-at-startup nil)
 
 (setq load-path (cons "~/.emacs.d/vhdl-mode-3.38.1/" load-path))
-(setq load-path (cons "~/.emacs.d/Pymacs/" load-path))
 
 (load "~/.emacs.d/req-mode.el")
+
+;; Restart frozen server: https://www.emacswiki.org/emacs/EmacsAsDaemon#h5o-16
+(defun signal-restart-server ()
+  "Handler for SIGUSR1 signal, to (re)start an emacs server.
+or from the command line with:
+$ kill -USR1 <emacs-pid>
+$ emacsclient -c
+"
+  (interactive)
+  "(server-force-delete)
+  (server-start :inhibit-prompt t)"
+  (server-start)
+  )
+(define-key special-event-map [sigusr1] 'signal-restart-server)
+
+;;--------------------------------------------------------------------------------
+;; co-pilot specific
+;;--------------------------------------------------------------------------------
+(use-package copilot
+  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :ensure t)
+
+;; complete by copilot first, then auto-complete
+(require 'auto-complete)
+(defun my-tab ()
+  (interactive)
+  (or (copilot-accept-completion)
+      (ac-expand nil)))
+
+(with-eval-after-load 'auto-complete
+  ; disable inline preview
+  (setq ac-disable-inline t)
+  ; show menu if have only one candidate
+  (setq ac-candidate-menu-min 0)
+
+  (define-key ac-completing-map (kbd "TAB") 'my-tab)
+  (define-key ac-completing-map (kbd "<tab>") 'my-tab))
+
+(define-key global-map [remap indent-for-tab-command] '(lambda ()
+                                                         (interactive)
+                                                         (or (copilot-accept-completion)
+                                                             (indent-for-tab-command))))
 
 ;;--------------------------------------------------------------------------------
 ;;   Customize keybindings
@@ -108,14 +159,16 @@
  ;; If there is more than one, they won't work right.
  '(auto-save-default nil)
  '(column-number-mode t)
+ '(custom-safe-themes
+   '("8cc64ffacd333b57125c4f504a433cede1dccd04861c4f7297faef772d325a8a" default))
  '(elpy-shell-use-project-root t)
- '(helm-gtags-auto-update t)
+ '(frame-background-mode 'dark)
+ '(helm-gtags-auto-update t t)
  '(inhibit-startup-screen t)
  '(minimap-mode nil)
  '(mouse-scroll-delay 0)
  '(package-selected-packages
-   (quote
-    (ac-php php-mode magit ws-butler xr helm-projectile projectile helm-sly sly helm-lsp yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets)))
+   '(helm-ag git-timemachine ag editorconfig helm-dash transpose-frame elpy flycheck ac-php php-mode magit ws-butler xr helm-projectile projectile helm-sly sly helm-lsp yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
  '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
@@ -180,15 +233,12 @@
 ;;--------------------------------------------------------------------------------
 (delete-selection-mode 1)
 
-(add-to-list 'load-path "~/.emacs.d/color-theme/")
-(require 'color-theme)
-(load "~/.emacs.d/color-theme-solarized.el")
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-solarized-dark)))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
+(load-theme 'solarized t)
 
 (set-face-attribute 'region nil :background "#666")
+(require 'magit)
+(set-face-attribute 'magit-header-line nil :background "#073642")
 
 (require 'nyan-mode)
 (nyan-mode)
@@ -212,9 +262,8 @@
 ;;--------------------------------------------------------------------------------
 ;;    HELM
 ;;--------------------------------------------------------------------------------
-(require 'helm)
-(require 'helm-config)
-(require 'helm-gtags)
+(straight-use-package 'helm)
+(straight-use-package 'helm-gtags)
 
 (global-set-key (kbd "M-,") 'helm-gtags-pop-stack)
 (global-set-key (kbd "M-.") 'helm-gtags-dwim)
@@ -278,6 +327,8 @@
 (helm-mode 1)
 (global-set-key (kbd "C-c p f") 'helm-projectile-find-files)
 
+(set-face-attribute 'helm-selection nil :background "#441100")
+
 ;;--------------------------------------------------------------------------------
 ;;    C/C++-Mode
 ;;--------------------------------------------------------------------------------
@@ -289,13 +340,17 @@
 ;;    Python Mode
 ;;--------------------------------------------------------------------------------
 
+;; https://github.com/jorgenschaefer/elpy/issues/1749
+;; (add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
+;; (set-language-environment "UTF-8")
+
 (setq py-python-command "python3")
 (setq python-shell-interpreter "ipython3")
 (setq python-shell-interpreter-args "--simple-prompt -i")
 
 (elpy-enable)
-(setq elpy-rpc-backend "jedi")
-(setq elpy-rpc-python-command "python3")
+;; (setq elpy-rpc-backend "jedi")
+;; (setq elpy-rpc-python-command "python3")
 
 (add-hook 'python-mode-hook 'ws-butler-mode)
 (add-hook 'python-mode-hook 'diff-hl-mode)

@@ -43,6 +43,7 @@ alias lst='ls -lrt --color | tail'
 export HADES6='fe80::21b:21ff:febd:80cb%eth0'
 export EDITOR=vim
 alias evim='TERM=xterm-256color emacs -nw'
+alias ec='emacsclient -nc'
 
 alias goto_home='cd /var/home/knordstroem'
 alias goto_workspace='cd /var/home/knordstroem/workspace'
