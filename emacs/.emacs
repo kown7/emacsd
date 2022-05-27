@@ -1,12 +1,21 @@
 ;;--------------------------------------------------------------------------------
 ;;   Modify exec/load-path
 ;;--------------------------------------------------------------------------------
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(package-initialize)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(setq package-enable-at-startup nil)
 
 (setq load-path (cons "~/.emacs.d/vhdl-mode-3.38.1/" load-path))
-(setq load-path (cons "~/.emacs.d/Pymacs/" load-path))
 
 (load "~/.emacs.d/req-mode.el")
 
@@ -23,6 +32,35 @@ $ emacsclient -c
   (server-start)
   )
 (define-key special-event-map [sigusr1] 'signal-restart-server)
+
+;;--------------------------------------------------------------------------------
+;; co-pilot specific
+;;--------------------------------------------------------------------------------
+(use-package copilot
+  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :ensure t)
+
+;; complete by copilot first, then auto-complete
+(require 'auto-complete)
+(defun my-tab ()
+  (interactive)
+  (or (copilot-accept-completion)
+      (ac-expand nil)))
+
+(with-eval-after-load 'auto-complete
+  ; disable inline preview
+  (setq ac-disable-inline t)
+  ; show menu if have only one candidate
+  (setq ac-candidate-menu-min 0)
+
+  (define-key ac-completing-map (kbd "TAB") 'my-tab)
+  (define-key ac-completing-map (kbd "<tab>") 'my-tab))
+
+(define-key global-map [remap indent-for-tab-command] '(lambda ()
+                                                         (interactive)
+                                                         (or (copilot-accept-completion)
+                                                             (indent-for-tab-command))))
+
 ;;--------------------------------------------------------------------------------
 ;;   Customize keybindings
 ;;--------------------------------------------------------------------------------
@@ -121,8 +159,11 @@ $ emacsclient -c
  ;; If there is more than one, they won't work right.
  '(auto-save-default nil)
  '(column-number-mode t)
+ '(custom-safe-themes
+   '("8cc64ffacd333b57125c4f504a433cede1dccd04861c4f7297faef772d325a8a" default))
  '(elpy-shell-use-project-root t)
- '(helm-gtags-auto-update t)
+ '(frame-background-mode 'dark)
+ '(helm-gtags-auto-update t t)
  '(inhibit-startup-screen t)
  '(minimap-mode nil)
  '(mouse-scroll-delay 0)
@@ -192,13 +233,8 @@ $ emacsclient -c
 ;;--------------------------------------------------------------------------------
 (delete-selection-mode 1)
 
-(add-to-list 'load-path "~/.emacs.d/color-theme/")
-(require 'color-theme)
-(load "~/.emacs.d/color-theme-solarized.el")
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-solarized-dark)))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
+(load-theme 'solarized t)
 
 (set-face-attribute 'region nil :background "#666")
 (require 'magit)
@@ -226,9 +262,8 @@ $ emacsclient -c
 ;;--------------------------------------------------------------------------------
 ;;    HELM
 ;;--------------------------------------------------------------------------------
-(require 'helm)
-(require 'helm-config)
-(require 'helm-gtags)
+(straight-use-package 'helm)
+(straight-use-package 'helm-gtags)
 
 (global-set-key (kbd "M-,") 'helm-gtags-pop-stack)
 (global-set-key (kbd "M-.") 'helm-gtags-dwim)
@@ -291,6 +326,8 @@ $ emacsclient -c
 
 (helm-mode 1)
 (global-set-key (kbd "C-c p f") 'helm-projectile-find-files)
+
+(set-face-attribute 'helm-selection nil :background "#441100")
 
 ;;--------------------------------------------------------------------------------
 ;;    C/C++-Mode
