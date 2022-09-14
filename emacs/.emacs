@@ -14,6 +14,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 (setq package-enable-at-startup nil)
+(straight-use-package 'use-package)
 
 (setq load-path (cons "~/.emacs.d/vhdl-mode-3.38.1/" load-path))
 
@@ -41,7 +42,7 @@ $ emacsclient -c
   :ensure t)
 
 ;; complete by copilot first, then auto-complete
-(require 'auto-complete)
+(straight-use-package 'auto-complete)
 (defun my-tab ()
   (interactive)
   (or (copilot-accept-completion)
@@ -74,6 +75,7 @@ $ emacsclient -c
                                          try-expand-line))
 
 (global-set-key (kbd "C-c t") 'tile-select)
+(straight-use-package 'projectile)
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
@@ -197,12 +199,13 @@ $ emacsclient -c
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
 ;;--------------------------------------------------------------------------------
-(require 'window-numbering)
-(window-numbering-mode)
 
 (setq make-backup-files nil)
 (setq auto-save-default t)
 (server-start)
+
+(straight-use-package 'diff-hl)
+(straight-use-package 'flycheck)
 
 ;;--------------------------------------------------------------------------------
 ;; extra face to make tristate-signals bold (not supported by XEmacs)
@@ -222,7 +225,7 @@ $ emacsclient -c
 ;;--------------------------------------------------------------------------------
 ;;    emacs VHDL autocomplete
 ;;--------------------------------------------------------------------------------
-(require 'auto-complete)
+(straight-use-package 'auto-complete)
 (add-hook 'vhdl-mode-hook 'auto-complete-mode)
 (add-hook 'vhdl-mode-hook 'diff-hl-mode)
 (add-hook 'vhdl-mode-hook 'diff-hl-flydiff-mode)
@@ -237,10 +240,11 @@ $ emacsclient -c
 (load-theme 'solarized t)
 
 (set-face-attribute 'region nil :background "#666")
+(straight-use-package 'magit)
 (require 'magit)
 (set-face-attribute 'magit-header-line nil :background "#073642")
 
-(require 'nyan-mode)
+(straight-use-package 'nyan-mode)
 (nyan-mode)
 (nyan-toggle-wavy-trail)
 (nyan-start-animation)
@@ -288,6 +292,7 @@ $ emacsclient -c
 (setq helm-gtags-auto-update t)
 (setq helm-gtags-path-style (quote relative))
 
+(straight-use-package 'ac-helm)  ;; Not necessary if using ELPA package
 (require 'ac-helm)  ;; Not necessary if using ELPA package
 (global-set-key (kbd "C-:") 'ac-complete-with-helm)
 (define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm)
@@ -332,6 +337,7 @@ $ emacsclient -c
 ;;--------------------------------------------------------------------------------
 ;;    C/C++-Mode
 ;;--------------------------------------------------------------------------------
+(straight-use-package 'ws-butler)
 (require 'ws-butler)
 (add-hook 'c-mode-hook 'ws-butler-mode)
 (add-hook 'c-mode-hook 'auto-complete-mode)
@@ -348,6 +354,7 @@ $ emacsclient -c
 (setq python-shell-interpreter "ipython3")
 (setq python-shell-interpreter-args "--simple-prompt -i")
 
+(straight-use-package 'elpy)
 (elpy-enable)
 ;; (setq elpy-rpc-backend "jedi")
 ;; (setq elpy-rpc-python-command "python3")
@@ -385,19 +392,23 @@ $ emacsclient -c
 (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
+(straight-use-package 'tile)
 (require 'tile)
 
-(require 'window-numbering)
+(straight-use-package 'window-numbering)
+;;(require 'window-numbering)
 (window-numbering-mode)
 
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
 
-(require 'smartscan)
+(straight-use-package 'smartscan)
+;;(require 'smartscan)
 (global-smartscan-mode 1)
 
+(straight-use-package 'button-lock)
 (require 'button-lock)
-(require 'fixmee)
+(straight-use-package 'fixmee)
 (global-fixmee-mode 1)
 
 (setq make-backup-files nil)
