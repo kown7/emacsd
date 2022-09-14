@@ -2,7 +2,12 @@
 
 pip3 install jedi rope flake8 autopep8 yapf black ipython pyflake
 
+set -e
+git submodule update --init --recursive
+
 cd $HOME
+rmdir .emacs.d
+set +e
 ln -s .dotfiles/emacs/ .emacs.d
 ln -s .dotfiles/emacs/.emacs .emacs
 
