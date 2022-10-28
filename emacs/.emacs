@@ -162,7 +162,7 @@ $ emacsclient -c
  '(auto-save-default nil)
  '(column-number-mode t)
  '(custom-safe-themes
-   '("8cc64ffacd333b57125c4f504a433cede1dccd04861c4f7297faef772d325a8a" default))
+   '("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "8cc64ffacd333b57125c4f504a433cede1dccd04861c4f7297faef772d325a8a" default))
  '(elpy-shell-use-project-root t)
  '(frame-background-mode 'dark)
  '(helm-gtags-auto-update t t)
@@ -173,15 +173,15 @@ $ emacsclient -c
    '(helm-ag git-timemachine ag editorconfig helm-dash transpose-frame elpy flycheck ac-php php-mode magit ws-butler xr helm-projectile projectile helm-sly sly helm-lsp yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
- '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
- '(vhdl-actual-port-name (quote ("\\(.*?\\)$" . "\\1")))
+ '(vc-handled-backends '(Git SVN SCCS Bzr Hg Mtn Arch))
+ '(vhdl-actual-port-name '("\\(.*?\\)$" . "\\1"))
  '(vhdl-array-index-record-field-in-sensitivity-list nil)
  '(vhdl-highlight-case-sensitive t)
  '(vhdl-highlight-special-words t)
+ '(vhdl-intelligent-tab nil)
  '(vhdl-reset-kind "Synchronous")
  '(vhdl-special-syntax-alist
-   (quote
-    (("signal-clr" "\\<\\(Clr\\|clr\\|CLR\\|Clear\\|clear\\|CLEAR\\)[A-Za-z0-9_]*" "Tomato" "orange")
+   '(("signal-clr" "\\<\\(Clr\\|clr\\|CLR\\|Clear\\|clear\\|CLEAR\\)[A-Za-z0-9_]*" "Tomato" "orange")
      ("signal-clock" "\\<\\(Clk\\|CLK\\|clk\\|Clock\\|clock\\|CLOCK\\)\\(\\>\\|[_A-Za-z0-9_]*\\>\\)+" "LimeGreen" "lightseagreen")
      ("signal-reset" "\\<\\(Rst\\|RST\\|rst\\|Reset\\|RESET\\|reset\\)[A-Za-z0-9_]*" "Tomato" "red3")
      ("type-definition" "\\<\\w+_[tT]\\>" "aquamarine3" "mediumaquamarine")
@@ -192,7 +192,7 @@ $ emacsclient -c
      ("process-name" "\\<[p]_\\w+\\>" "Grey50" "gray50")
      ("Enable" "\\<\\w+\\(En\\|_EN\\|[WR]en\\|Ena\\||_WE\\)\\>" "brightblue" "chartreuse2")
      ("Valid" "\\<\\w+\\(Vld\\|VLD\\|_vld\\|Vld_[A-z]+\\)\\>" "brightblue" "chartreuse2")
-     ("Ready" "\\<\\w+\\(Rdy\\|RDY\\|_rdy\\)\\>" "brightblue" "chartreuse2"))))
+     ("Ready" "\\<\\w+\\(Rdy\\|RDY\\|_rdy\\)\\>" "brightblue" "chartreuse2")))
  '(vhdl-underscore-is-part-of-word t))
 
 
