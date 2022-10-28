@@ -14,6 +14,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 (setq package-enable-at-startup nil)
+(straight-use-package 'use-package)
 
 (setq load-path (cons "~/.emacs.d/vhdl-mode-3.38.1/" load-path))
 
@@ -41,7 +42,7 @@ $ emacsclient -c
   :ensure t)
 
 ;; complete by copilot first, then auto-complete
-(require 'auto-complete)
+(straight-use-package 'auto-complete)
 (defun my-tab ()
   (interactive)
   (or (copilot-accept-completion)
@@ -74,6 +75,7 @@ $ emacsclient -c
                                          try-expand-line))
 
 (global-set-key (kbd "C-c t") 'tile-select)
+(straight-use-package 'projectile)
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
@@ -92,6 +94,8 @@ $ emacsclient -c
 ;; M-: (read-key-sequence-vector "") RET C-ö
 (global-set-key (quote [67109116]) 'backward-paragraph)
 (global-set-key (quote [67109092]) 'forward-paragraph)
+(global-set-key (kbd "C-$") 'diff-hl-next-hunk)
+(global-set-key (kbd "C-£") 'diff-hl-previous-hunk)
 
 ;; special scrolling
 (global-set-key '[S-home]   'my-scroll-right-9999)
@@ -145,6 +149,14 @@ $ emacsclient -c
   (let ((current-prefix-arg 9999))
     (call-interactively 'scroll-right)))
 
+;; magit open other window
+(use-package magit
+  :bind (:map magit-file-section-map
+              ("RET" . magit-diff-visit-file-other-window)
+              :map magit-hunk-section-map
+              ("RET" . magit-diff-visit-file-other-window))
+  )
+
 ;;--------------------------------------------------------------------------------
 ;;    General settings (optional)
 ;;--------------------------------------------------------------------------------
@@ -160,7 +172,7 @@ $ emacsclient -c
  '(auto-save-default nil)
  '(column-number-mode t)
  '(custom-safe-themes
-   '("8cc64ffacd333b57125c4f504a433cede1dccd04861c4f7297faef772d325a8a" default))
+   '("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "8cc64ffacd333b57125c4f504a433cede1dccd04861c4f7297faef772d325a8a" default))
  '(elpy-shell-use-project-root t)
  '(frame-background-mode 'dark)
  '(helm-gtags-auto-update t t)
@@ -171,15 +183,15 @@ $ emacsclient -c
    '(helm-ag git-timemachine ag editorconfig helm-dash transpose-frame elpy flycheck ac-php php-mode magit ws-butler xr helm-projectile projectile helm-sly sly helm-lsp yasnippet-classic-snippets zones diff-hl groovy-mode jedi json-mode smartscan ac-octave auto-complete-auctex ac-helm helm-cmd-t helm-commandlinefu helm-exwm helm-fuzzier helm-fuzzy-find helm-ls-git helm-navi window-numbering nyan-mode helm-package helm-mode-manager helm-helm-commands helm-gtags helm-grepint helm-git-grep helm-git-files helm-git helm-frame helm-filesets))
  '(show-paren-mode t nil (paren))
  '(tool-bar-mode nil)
- '(vc-handled-backends (quote (Git SVN SCCS Bzr Hg Mtn Arch)))
- '(vhdl-actual-port-name (quote ("\\(.*?\\)$" . "\\1")))
+ '(vc-handled-backends '(Git SVN SCCS Bzr Hg Mtn Arch))
+ '(vhdl-actual-port-name '("\\(.*?\\)$" . "\\1"))
  '(vhdl-array-index-record-field-in-sensitivity-list nil)
  '(vhdl-highlight-case-sensitive t)
  '(vhdl-highlight-special-words t)
+ '(vhdl-intelligent-tab nil)
  '(vhdl-reset-kind "Synchronous")
  '(vhdl-special-syntax-alist
-   (quote
-    (("signal-clr" "\\<\\(Clr\\|clr\\|CLR\\|Clear\\|clear\\|CLEAR\\)[A-Za-z0-9_]*" "Tomato" "orange")
+   '(("signal-clr" "\\<\\(Clr\\|clr\\|CLR\\|Clear\\|clear\\|CLEAR\\)[A-Za-z0-9_]*" "Tomato" "orange")
      ("signal-clock" "\\<\\(Clk\\|CLK\\|clk\\|Clock\\|clock\\|CLOCK\\)\\(\\>\\|[_A-Za-z0-9_]*\\>\\)+" "LimeGreen" "lightseagreen")
      ("signal-reset" "\\<\\(Rst\\|RST\\|rst\\|Reset\\|RESET\\|reset\\)[A-Za-z0-9_]*" "Tomato" "red3")
      ("type-definition" "\\<\\w+_[tT]\\>" "aquamarine3" "mediumaquamarine")
@@ -190,19 +202,23 @@ $ emacsclient -c
      ("process-name" "\\<[p]_\\w+\\>" "Grey50" "gray50")
      ("Enable" "\\<\\w+\\(En\\|_EN\\|[WR]en\\|Ena\\||_WE\\)\\>" "brightblue" "chartreuse2")
      ("Valid" "\\<\\w+\\(Vld\\|VLD\\|_vld\\|Vld_[A-z]+\\)\\>" "brightblue" "chartreuse2")
-     ("Ready" "\\<\\w+\\(Rdy\\|RDY\\|_rdy\\)\\>" "brightblue" "chartreuse2"))))
+     ("Ready" "\\<\\w+\\(Rdy\\|RDY\\|_rdy\\)\\>" "brightblue" "chartreuse2")))
  '(vhdl-underscore-is-part-of-word t))
 
 
 ;;--------------------------------------------------------------------------------
 ;;    Other customizations
 ;;--------------------------------------------------------------------------------
-(require 'window-numbering)
-(window-numbering-mode)
 
 (setq make-backup-files nil)
 (setq auto-save-default t)
 (server-start)
+
+(setq ring-bell-function 'ignore)
+(setq visible-bell t)
+
+(straight-use-package 'diff-hl)
+(straight-use-package 'flycheck)
 
 ;;--------------------------------------------------------------------------------
 ;; extra face to make tristate-signals bold (not supported by XEmacs)
@@ -222,7 +238,7 @@ $ emacsclient -c
 ;;--------------------------------------------------------------------------------
 ;;    emacs VHDL autocomplete
 ;;--------------------------------------------------------------------------------
-(require 'auto-complete)
+(straight-use-package 'auto-complete)
 (add-hook 'vhdl-mode-hook 'auto-complete-mode)
 (add-hook 'vhdl-mode-hook 'diff-hl-mode)
 (add-hook 'vhdl-mode-hook 'diff-hl-flydiff-mode)
@@ -237,10 +253,11 @@ $ emacsclient -c
 (load-theme 'solarized t)
 
 (set-face-attribute 'region nil :background "#666")
+(straight-use-package 'magit)
 (require 'magit)
 (set-face-attribute 'magit-header-line nil :background "#073642")
 
-(require 'nyan-mode)
+(straight-use-package 'nyan-mode)
 (nyan-mode)
 (nyan-toggle-wavy-trail)
 (nyan-start-animation)
@@ -288,6 +305,7 @@ $ emacsclient -c
 (setq helm-gtags-auto-update t)
 (setq helm-gtags-path-style (quote relative))
 
+(straight-use-package 'ac-helm)  ;; Not necessary if using ELPA package
 (require 'ac-helm)  ;; Not necessary if using ELPA package
 (global-set-key (kbd "C-:") 'ac-complete-with-helm)
 (define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm)
@@ -332,6 +350,7 @@ $ emacsclient -c
 ;;--------------------------------------------------------------------------------
 ;;    C/C++-Mode
 ;;--------------------------------------------------------------------------------
+(straight-use-package 'ws-butler)
 (require 'ws-butler)
 (add-hook 'c-mode-hook 'ws-butler-mode)
 (add-hook 'c-mode-hook 'auto-complete-mode)
@@ -348,6 +367,7 @@ $ emacsclient -c
 (setq python-shell-interpreter "ipython3")
 (setq python-shell-interpreter-args "--simple-prompt -i")
 
+(straight-use-package 'elpy)
 (elpy-enable)
 ;; (setq elpy-rpc-backend "jedi")
 ;; (setq elpy-rpc-python-command "python3")
@@ -385,19 +405,23 @@ $ emacsclient -c
 (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
+(straight-use-package 'tile)
 (require 'tile)
 
-(require 'window-numbering)
+(straight-use-package 'window-numbering)
+;;(require 'window-numbering)
 (window-numbering-mode)
 
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
 
-(require 'smartscan)
+(straight-use-package 'smartscan)
+;;(require 'smartscan)
 (global-smartscan-mode 1)
 
+(straight-use-package 'button-lock)
 (require 'button-lock)
-(require 'fixmee)
+(straight-use-package 'fixmee)
 (global-fixmee-mode 1)
 
 (setq make-backup-files nil)
