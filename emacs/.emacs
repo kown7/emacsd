@@ -204,6 +204,9 @@ $ emacsclient -c
 (setq auto-save-default t)
 (server-start)
 
+(setq ring-bell-function 'ignore)
+(setq visible-bell t)
+
 (straight-use-package 'diff-hl)
 (straight-use-package 'flycheck)
 
