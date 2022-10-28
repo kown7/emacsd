@@ -94,6 +94,8 @@ $ emacsclient -c
 ;; M-: (read-key-sequence-vector "") RET C-ö
 (global-set-key (quote [67109116]) 'backward-paragraph)
 (global-set-key (quote [67109092]) 'forward-paragraph)
+(global-set-key (kbd "C-$") 'diff-hl-next-hunk)
+(global-set-key (kbd "C-£") 'diff-hl-previous-hunk)
 
 ;; special scrolling
 (global-set-key '[S-home]   'my-scroll-right-9999)
@@ -146,6 +148,14 @@ $ emacsclient -c
   (interactive)
   (let ((current-prefix-arg 9999))
     (call-interactively 'scroll-right)))
+
+;; magit open other window
+(use-package magit
+  :bind (:map magit-file-section-map
+              ("RET" . magit-diff-visit-file-other-window)
+              :map magit-hunk-section-map
+              ("RET" . magit-diff-visit-file-other-window))
+  )
 
 ;;--------------------------------------------------------------------------------
 ;;    General settings (optional)
