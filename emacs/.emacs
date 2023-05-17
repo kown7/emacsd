@@ -395,6 +395,25 @@ $ emacsclient -c
         (lambda () (setq forward-sexp-function nil)))
 
 ;;--------------------------------------------------------------------------------
+;;    P-mode
+;;--------------------------------------------------------------------------------
+(setq p-override-pascal-file-type t)
+(use-package p-mode
+  :straight (:host github :repo "rudi/p-mode" :files ("*.el" "snippets"))
+  :ensure t
+  :mode "\\.p\\'"
+  :commands (p-mode))
+
+;;--------------------------------------------------------------------------------
+;;    YAML mode
+;;--------------------------------------------------------------------------------
+(setq p-override-pascal-file-type t)
+(use-package yaml-mode
+  :straight (:host github :repo "yoshiki/yaml-mode" :files ("*.el"))
+  )
+
+
+;;--------------------------------------------------------------------------------
 ;;    Other customizations
 ;;--------------------------------------------------------------------------------
 ;; no toolbar/scrollbar
