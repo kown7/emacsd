@@ -110,9 +110,3 @@ if [ -f /etc/scs-scripts/scs_settings.sh ]; then
     source /etc/scs-scripts/scs_settings.sh
 fi
 
-if [ "$(grep -c microsoft /proc/version)" != "0" ]; then
-	export DISPLAY=$(route -n | awk '/0.0.0.0 / {print $2; exit}'):0
-	# export DISPLAY=$(awk '/nameserver / {print $2; exit}' /run/resolvconf/resolv.conf 2>/dev/null):0
-	export LIBGL_ALWAYS_INDIRECT=1
-	umask 022
-fi;
