@@ -1,6 +1,183 @@
+2023-08-30  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.39.2 released.
+	(top): Byte-compile with Emacs 29 causes 'defvar-1' error in older Emacs.
+	(vhdl-doc-coding-style): Update coding style references links.
+
+2023-08-28  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.39.2 released.
+	(vhdl-lineup-comment, vhdl-get-syntactic-context): Fix multi-line comment indentation.
+	(vhdl-in-literal, vhdl-template-process): Fix VHDL standard check.
+	(vhdl-corresponding-begin): Fix missing parentheses for matching.
+
+2023-07-05  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.39.1 released.
+	(vhdl-*-keywords): Predefined keywords updates.
+
+2023-05-24  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-08-*, vhdl-19-*): Predefined keywords, types, attributes, functions updates.
+
+2023-05-19  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-doc-release-notes): Updates for 3.39 release.
+
+2023-05-17  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(top): Savannah 2023-05-05 sync.
+
+2023-05-16  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-set-style): Savannah sync.
+	(vhdl-fontify-buffer): Savannah sync.
+	(vhdl-indent-region): Obsolete (use `indent-region') (Savannah sync).
+	(vhdl--progress-reporter, vhdl-indent-line, vhdl-align-*, vhdl-fix-case-*): Use `progress-reporter-update' (Savannah sync).
+	(vhdl-electric-tab): Use `use-region-p' (Savannah sync).
+	(kill-line): Replace by `delete-region' (Savannah sync).
+
+2023-05-15  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-mode): Change into derived prog-mode, adapt initializations.
+	(vhdl-mode): Use `syntax-propertize-rules'.
+	(vhdl-electric-mode, vhdl-stutter-mode): Change into minor mode.
+	(vhdl-mode-map-init): Remove `backspace'/`delete' key bindings.
+	(vhdl-mode-line-update): Remove.
+	(vhdl-mode-syntax-table-init): Revert back, needed for `vhdl-underscore-is-part-of-word' updating.
+
+2023-05-11  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-words-init): `regexp-opt' cleanup.
+
+2023-05-10  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl--pushnew, vhdl-project-autoload): Emacs 28 updates (partial Savannah sync).
+
+2023-05-09  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-begin-p, vhdl-corresponding-mid, vhdl-backward-to-block): Fix indentation for "postponed process".
+
+2023-05-08  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Fix customization mask for enhanced error regexp.
+	(vhdl-compiler-alist): Enhance customization mask for error regexp.
+
+2023-05-04  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Enhance error regexp to distinguish warnings for ModelSim & others, add error regexp for Xilinx Vivado.
+
+2023-04-27  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(top): Emacs 28 updates (partial Savannah sync).
+
+2023-04-25  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(top): Emacs 28 cleanup, compilation warning fixes (single quotes).
+	(vhdl-get-syntactic-context, vhdl-corresponding-begin): Fix if-generate indentation.
+	(vhdl-lineup-statement-cont): Fix conditional assignment indendation.
+	(vhdl-corresponding-end): Fix indentation for keyword that is also attribute.
+
+2023-04-21  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(top): Emacs 28 compatibility / compilation warning fixes.
+
+2023-04-20  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-begin-*-re, vhdl-beginning-of-statement-1): Fix indentation for with-select statement.
+
+2023-04-18  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-standard): Add VHDL-2019 support.
+	(vhdl-19-*): Add VHDL-2019 keywords, types, attributes, enum values, functions.
+	(vhdl-backward-syntactic-ws): Fix indentation for C-directives.
+	(vhdl-get-block-state): Fix indentation for types in interface list.
+
+2023-03-30  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Enhance error regexp for ModelSim.
+
+2022-09-08  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.38.4 released.
+
+2022-08-31  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-testbench-include-custom-library): Add option to include custom library clause in testbench.
+
+2022-07-22  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-testbench-include-libraries): Add option for libraries to be included in testbench.
+	(vhdl-template-case): Support case-generate statement (template, indentation).
+
+2021-02-01  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.38.3 released.
+
+2022-01-31  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-auto-wrap-comments): Add option for auto comment wrapping.
+	(vhdl-optional-labels-at-end): Expand option use to all templates.
+	(vhdl-electric-space): Fix wrapping of existing too long lines.
+
+2022-01-26  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-optional-labels-at-end): Add option for labels at construct's end.
+	(vhdl-comment-display-line-char): Add option for comment display line characters.
+
+2021-04-26  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.38.2 released.
+
+2020-06-11  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-beginning-of-statement-1): Fix indentation for "package ... is new".
+
+2020-06-10  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-corresponding-end): Fix indentation inside protected type declaration.
+
+2020-06-09  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-beginning-of-statement-1, vhdl-get-syntactic-context): Fix indentation of "protected body".
+
+2020-06-08  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-beginning-of-libunit): Fix indentation for "package ... is new".
+	(vhdl-indent-line): Prepare search for interactive indent-line call.
+
+2020-06-05  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-beginning-of-libunit, vhdl-corresponding-end): Fix indentation for "package ... is new".
+
 2015-03-11  Reto Zimmermann  <reto@gnu.org>
 
-	* vhdl-mode.el: Version 3.37.2 released.
+	* vhdl-mode.el: Version 3.38.1 released.
 	(vhdl-beginning-of-statement-1): Fix indentation for "else generate".
 	(vhdl-template-els*): Support generate statement.
 	(vhdl-begin-p): Handle missing space between keyword and parenthesis.

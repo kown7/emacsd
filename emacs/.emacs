@@ -14,7 +14,7 @@
 ;; Use straight.el for package management
 (straight-use-package 'use-package)
 
-(setq load-path (cons "~/.emacs.d/vhdl-mode-3.38.1/" load-path))
+(setq load-path (cons "~/.emacs.d/vhdl-mode-3.39.3/" load-path))
 
 ;; Configure Helm
 (use-package helm
@@ -136,6 +136,9 @@
 (straight-use-package 'window-numbering)
 ;;(require 'window-numbering)
 (window-numbering-mode)
+
+(straight-use-package 'smartscan)
+(global-smartscan-mode 1)
 
 ;;-------------------------------------------------------
 ;; Custom functions

@@ -11,8 +11,8 @@ VHDL Mode Installation Guide (Unix and Windows)
 Prerequisites
 -------------
 
-  - GNU Emacs 20.X/21.X
-  - XEmacs 20.X/21.X
+  - GNU Emacs 20 or higher
+  - XEmacs 20 or higher
 
 
 Unix
@@ -28,7 +28,7 @@ Unix
         Put `vhdl-mode.el' and `vhdl-mode.elc' in the `site-lisp' directory
         of your Emacs installation.
 
-  2. a) Local installation (not required for GNU Emacs 21):
+  2. a) Local installation (not required for GNU Emacs 20 and higher):
         Add the following lines to your Emacs start-up file (`.emacs').
 
 ;;;
@@ -37,7 +37,7 @@ Unix
 (autoload 'vhdl-mode "vhdl-mode" "VHDL Mode" t)
 (setq auto-mode-alist (cons '("\\.vhdl?\\'" . vhdl-mode) auto-mode-alist))
 
-     b) Global installation:
+     b) Global installation (not required for GNU Emacs 20 and higher):
         Put `site-start.el' in the `site-lisp' directory of your Emacs
         installation (or add its contents to an already existing
         `site-start.el' file).
@@ -56,6 +56,8 @@ Windows 95 & NT  (by Kai Cheng <kai.cheng@intel.com>)
 
   Prerequisites: GNU Emacs for Windows NT or Windows 95 from
     <http://www.gnu.org/software/emacs/windows/ntemacs.html>
+
+  (The steps below might not be needed anymore in newer versions.)
 
   1. Expand files into directory (e.g. c:\VhdlMode)
 
